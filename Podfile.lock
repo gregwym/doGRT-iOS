@@ -14,6 +14,8 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - CSVImporter (1.7.1):
+    - HandySwift (~> 2.0)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -21,6 +23,7 @@ PODS:
     - FMDBMigrationManager/System (= 1.4.1)
   - FMDBMigrationManager/System (1.4.1):
     - FMDB/standard (>= 2.3)
+  - HandySwift (2.2.0)
   - InformaticToolbar (0.2.1)
   - NSLogger (1.7.0):
     - NSLogger/Standard (= 1.7.0)
@@ -29,25 +32,31 @@ PODS:
     - QuickDialog/Core (= 1.1.0)
   - QuickDialog/Core (1.1.0)
   - REMenu (1.10)
+  - SSZipArchive (1.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
+  - CSVImporter (~> 1.7)
   - FMDB (~> 2.4)
   - FMDBMigrationManager (~> 1.4)
   - InformaticToolbar (~> 0.2.1)
   - NSLogger
   - QuickDialog (~> 1.0)
   - REMenu (~> 1.10)
+  - SSZipArchive (~> 1.7)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  CSVImporter: 9b7fb2a308977137d9a64e7898ec54168c38ce96
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
+  HandySwift: 7bc03858d1368483f79ae6563f58619cf7ef5505
   InformaticToolbar: 207bab6be699b8365acda7e2509b390f98a590f6
   NSLogger: daa17368272ddf10a0850c218fe49de23b50f2eb
   QuickDialog: 6954450c4c2d003a89fbfee48ec8fa4695436b01
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
+  SSZipArchive: 63f8e11cfcc33e03e4cd666b4359ea8bd6facd0c
 
-PODFILE CHECKSUM: 1bd1919d6e5248be3df81551e9c25ecd09c3a17b
+PODFILE CHECKSUM: eb1e1306c1f0796f9889cc34f5b44a73b32f004e
 
 COCOAPODS: 1.2.0
