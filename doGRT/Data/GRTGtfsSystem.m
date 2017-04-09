@@ -10,6 +10,7 @@
 
 #import "FMDatabase.h"
 #import "ASIHTTPRequest.h"
+#import "FMDBMigrationManager.h"
 
 static const NSInteger kMaxStopsLimit = 30;
 static const NSInteger kBuiltInDataVersion = 20150106;
@@ -121,7 +122,7 @@ NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/gtfs_data/grt.j
 	}
 }
 
-#pragma mark - data preparation and update
+#pragma mark - data preparation
 
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
 {
@@ -138,34 +139,74 @@ NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/gtfs_data/grt.j
     return success;
 }
 
+- (void)migrateDb
+{
+    NSURL *localURL = [self dbURL];
+    FMDBMigrationManager *manager = [FMDBMigrationManager managerWithDatabaseAtPath:localURL.path migrationsBundle:[NSBundle mainBundle]];
+
+    NSLog(@"Has `schema_migrations` table?: %@", manager.hasMigrationsTable ? @"YES" : @"NO");
+    NSLog(@"Origin Version: %llu", manager.originVersion);
+    NSLog(@"All migrations: %@", manager.migrations);
+    NSLog(@"Pending versions: %@", manager.pendingVersions);
+
+    NSError *error = nil;
+    BOOL success = NO;
+    if (!manager.hasMigrationsTable) {
+        success = [manager createMigrationsTable:&error];
+        if (!success) {
+            NSLog(@"Create migration table failed: %@", error);
+            abort();
+        }
+        success = NO;
+    }
+    success = [manager migrateDatabaseToVersion:UINT64_MAX progress:nil error:&error];
+    if (!success) {
+        NSLog(@"Migration failed: %@", error);
+        abort();
+    }
+
+    NSLog(@"Current version: %llu", manager.currentVersion);
+    NSLog(@"Applied versions: %@", manager.appliedVersions);
+}
+
 - (void)bootstrap
 {
-	// Copy database to documents directory if does not exists
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSURL *localURL = [self dbURL];
-	NSNumber *dataVersion = [[NSUserDefaults standardUserDefaults] objectForKey:GRTGtfsDataVersionKey];
-	
-	if (![fileManager fileExistsAtPath:localURL.path] || dataVersion.integerValue < kBuiltInDataVersion) {
-		NSURL *dbURL = [[NSBundle mainBundle] URLForResource:@"GRT_GTFS" withExtension:@"sqlite"];
-		NSError *error = nil;
-		[fileManager removeItemAtURL:localURL error:nil];
-		if (![fileManager copyItemAtURL:dbURL toURL:localURL error:&error]) {
-			NSLog(@"Fail to copy db with error %@", error.localizedDescription);
-			abort();
-		}
-		NSLog(@"DB copied from %@ to %@", dbURL, localURL);
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:kBuiltInDataVersion] forKey:GRTGtfsDataVersionKey];
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:kBuiltInDataEndDate] forKey:GRTGtfsDataEndDateKey];
-		[[NSUserDefaults standardUserDefaults] synchronize];
-	}
-	[self addSkipBackupAttributeToItemAtURL:localURL];
-		
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSURL *dbURL = [self dbURL];
+    NSNumber *dataVersion = [[NSUserDefaults standardUserDefaults] objectForKey:GRTGtfsDataVersionKey];
+    BOOL recreateDb = dataVersion == nil || dataVersion.integerValue < kBuiltInDataVersion;
+
+    if (recreateDb) {
+        [fileManager removeItemAtURL:dbURL error:nil];
+    }
+
+    [self migrateDb];
+    [self addSkipBackupAttributeToItemAtURL:dbURL];
+
+    if (recreateDb) {
+        NSURL *gtfsArchiveURL = [[NSBundle mainBundle] URLForResource:@"GRT_GTFS" withExtension:@"zip"];
+        [self populateDbFromGtfsArchiveURL:gtfsArchiveURL];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:kBuiltInDataVersion] forKey:GRTGtfsDataVersionKey];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:kBuiltInDataEndDate] forKey:GRTGtfsDataEndDateKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
 	NSAssert([self.db goodConnection], @"Whether the db is having good connection");
 	
 	// Check launching status
 	NSLog(@"GtfsSystem boot with dataVersion: %@",
 		  [[NSUserDefaults standardUserDefaults] objectForKey:GRTGtfsDataVersionKey]);
+    NSLog(@"App Dir: %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
 }
+
+#pragma mark - data population
+
+- (void)populateDbFromGtfsArchiveURL:(NSURL *)gtfsArchiveURL
+{
+    // TODO
+}
+
+#pragma mark - data update
 
 - (void)checkForUpdate
 {
