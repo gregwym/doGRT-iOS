@@ -6,5 +6,6 @@ target 'doGRT' do
   pod 'InformaticToolbar', '~> 0.2.1'
   pod 'REMenu', '~> 1.10'
   pod 'AFNetworking', '~> 3.0'
+  pod 'FMDBMigrationManager', '~> 1.4'
   pod 'NSLogger'
 end
