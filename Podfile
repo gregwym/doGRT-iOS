@@ -8,8 +8,9 @@ target 'doGRT' do
   pod 'REMenu', '~> 1.10'
   pod 'AFNetworking', '~> 3.0'
   pod 'FMDBMigrationManager', '~> 1.4'
-  pod 'CSVImporter', '~> 1.7'
+  pod 'CHCSVParser', '~> 2.1'
   pod 'SSZipArchive', '~>1.7'
+  pod 'BlocksKit', '~> 2.2'
   pod 'NSLogger'
 end
 
