@@ -7,13 +7,15 @@
 //
 
 #import "GRTGtfsSystem.h"
+#import "GRTGtfsParser.h"
 
-#import "FMDatabase.h"
 #import "ASIHTTPRequest.h"
-#import "FMDBMigrationManager.h"
+#import <FMDB/FMDatabase.h>
+#import <FMDBMigrationManager/FMDBMigrationManager.h>
+#import <BlocksKit/BlocksKit.h>
 
 static const NSInteger kMaxStopsLimit = 30;
-static const NSInteger kBuiltInDataVersion = 20150106;
+static const NSInteger kBuiltInDataVersion = 20170408;
 static const NSInteger kBuiltInDataEndDate = 20150426;
 
 NSString * const GRTGtfsDataVersionKey = @"GRTGtfsDataVersionKey";
@@ -25,6 +27,7 @@ NSString * const GRTGtfsDataUpdateInProgressNotification = @"GRTGtfsDataUpdateIn
 NSString * const GRTGtfsDataUpdateDidFinishNotification = @"GRTGtfsDataUpdateDidFinishNotification";
 
 NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/gtfs_data/grt.json";
+NSString * const kGRTGtfsFeedUpdateJsonUrl = @"http://dolast.com/gtfs_feed/grt.json";
 
 @interface GRTGtfsSystem ()
 
@@ -177,6 +180,7 @@ NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/gtfs_data/grt.j
     BOOL recreateDb = dataVersion == nil || dataVersion.integerValue < kBuiltInDataVersion;
 
     if (recreateDb) {
+        NSLog(@"Removing current GTFS database");
         [fileManager removeItemAtURL:dbURL error:nil];
     }
 
@@ -203,7 +207,17 @@ NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/gtfs_data/grt.j
 
 - (void)populateDbFromGtfsArchiveURL:(NSURL *)gtfsArchiveURL
 {
-    // TODO
+    NSLog(@"Populating GTFS database with %@", gtfsArchiveURL);
+    GRTGtfsParser *gtfsParser = [[GRTGtfsParser alloc] initWithGtfsArchiveUrl:gtfsArchiveURL];
+    [gtfsParser parseWithCallback:^BOOL (NSString *filename, NSArray *keys, NSArray *values) {
+        NSString *dbKeyString = [keys componentsJoinedByString:@", "];
+        NSString *dbValueString = [[keys bk_map:^NSString *(NSString *key) {
+            return @"?";
+        }] componentsJoinedByString:@", "];
+
+        [self.db executeUpdate:[NSString stringWithFormat:@"INSERT INTO %@ (%@) VALUES (%@)", filename, dbKeyString, dbValueString] values:values error:nil];
+        return YES;
+    }];
 }
 
 #pragma mark - data update
