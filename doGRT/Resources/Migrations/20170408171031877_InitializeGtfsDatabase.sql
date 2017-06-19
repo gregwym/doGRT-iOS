@@ -33,10 +33,10 @@ CREATE TABLE "calendar" (
 -- ----------------------------
 DROP TABLE IF EXISTS "calendar_dates";
 CREATE TABLE "calendar_dates" (
-	 "calendar_date_id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
 	 "service_id" text NOT NULL,
 	 "date" integer NOT NULL,
-	 "exception_type" integer NOT NULL
+	 "exception_type" integer NOT NULL,
+	 PRIMARY KEY("service_id","date")
 );
 
 -- ----------------------------
@@ -47,7 +47,11 @@ CREATE TABLE "routes" (
 	 "route_id" integer NOT NULL,
 	 "route_short_name" text NOT NULL,
 	 "route_long_name" text NOT NULL,
+	 "route_desc" text,
 	 "route_type" integer NOT NULL,
+	 "route_url" text,
+	 "route_color" text,
+	 "route_text_color" text,
 	PRIMARY KEY("route_id")
 );
 
@@ -74,6 +78,11 @@ CREATE TABLE "stop_times" (
 	 "departure_time" integer NOT NULL,
 	 "stop_id" integer NOT NULL,
 	 "stop_sequence" integer NOT NULL,
+	 "stop_headsign" text,
+	 "pickup_type" integer,
+	 "drop_off_type" integer,
+	 "shape_dist_traveled" real,
+	 "timepoint" integer,
 	PRIMARY KEY("trip_id","stop_sequence"),
 	FOREIGN KEY ("trip_id") REFERENCES "trips" ("trip_id") ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY ("stop_id") REFERENCES "stops" ("stop_id") ON DELETE CASCADE ON UPDATE CASCADE
@@ -85,10 +94,19 @@ CREATE TABLE "stop_times" (
 DROP TABLE IF EXISTS "stops";
 CREATE TABLE "stops" (
 	 "stop_id" integer NOT NULL,
+	 "stop_code" text,
 	 "stop_name" text NOT NULL,
+	 "stop_desc" text,
 	 "stop_lat" real NOT NULL,
 	 "stop_lon" real NOT NULL,
-	PRIMARY KEY("stop_id")
+	 "zone_id" text,
+	 "stop_url" text,
+	 "location_type" integer,
+	 "parent_station" integer,
+	 "stop_timezone" text,
+	 "wheelchair_boarding" integer,
+	PRIMARY KEY("stop_id"),
+	FOREIGN KEY ("parent_station") REFERENCES "stops" ("stop_id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- ----------------------------
@@ -100,7 +118,12 @@ CREATE TABLE "trips" (
 	 "service_id" text NOT NULL,
 	 "trip_id" integer NOT NULL,
 	 "trip_headsign" text,
+	 "trip_short_name" text,
+	 "direction_id" integer,
+	 "block_id" integer,
 	 "shape_id" integer,
+	 "wheelchair_accessible" integer,
+	 "bikes_allowed" integer,
 	PRIMARY KEY("trip_id"),
 	FOREIGN KEY ("route_id") REFERENCES "routes" ("route_id") ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY ("service_id") REFERENCES "calendar" ("service_id") ON DELETE CASCADE ON UPDATE CASCADE
