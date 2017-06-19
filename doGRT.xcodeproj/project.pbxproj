@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2504F0701698812700D3D1A3 /* GRTStopDetailsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2504F06F1698812700D3D1A3 /* GRTStopDetailsManager.m */; };
+		251371BB1E99C387009099F0 /* GRT_GTFS.zip in Resources */ = {isa = PBXBuildFile; fileRef = 251371BA1E99C387009099F0 /* GRT_GTFS.zip */; };
+		251371C11E9AC60F009099F0 /* GRTGtfsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 251371C01E9AC60F009099F0 /* GRTGtfsParser.m */; };
 		2515ED3414C5817600FDCD6D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2515ED3314C5817600FDCD6D /* UIKit.framework */; };
 		2515ED3614C5817600FDCD6D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2515ED3514C5817600FDCD6D /* Foundation.framework */; };
 		2515ED3814C5817600FDCD6D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2515ED3714C5817600FDCD6D /* CoreGraphics.framework */; };
@@ -63,12 +65,15 @@
 		25EAB19614CD783F004A9DEC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAB19514CD783F004A9DEC /* libsqlite3.dylib */; };
 		25EAB19D14CD82B1004A9DEC /* GRTStop.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EAB19C14CD82B1004A9DEC /* GRTStop.m */; };
 		25F18A9C14DBDC2E008B1A31 /* GRTTrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 25F18A9B14DBDC2E008B1A31 /* GRTTrip.m */; };
-		A88802FDF1A616714DCA9000 /* libPods-doGRT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE29D95533A278CA05A7EEE /* libPods-doGRT.a */; };
+		280F2F7F310B7EFB28121D66 /* Pods_doGRT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DF0407BD3BF6C3CA79E111 /* Pods_doGRT.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2504F06E1698812700D3D1A3 /* GRTStopDetailsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRTStopDetailsManager.h; sourceTree = "<group>"; };
 		2504F06F1698812700D3D1A3 /* GRTStopDetailsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRTStopDetailsManager.m; sourceTree = "<group>"; };
+		251371BA1E99C387009099F0 /* GRT_GTFS.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = GRT_GTFS.zip; sourceTree = "<group>"; };
+		251371BF1E9AC60F009099F0 /* GRTGtfsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRTGtfsParser.h; sourceTree = "<group>"; };
+		251371C01E9AC60F009099F0 /* GRTGtfsParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRTGtfsParser.m; sourceTree = "<group>"; };
 		2515ED2F14C5817600FDCD6D /* doGRT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = doGRT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2515ED3314C5817600FDCD6D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2515ED3514C5817600FDCD6D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -164,8 +169,8 @@
 		25EAB19C14CD82B1004A9DEC /* GRTStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRTStop.m; sourceTree = "<group>"; };
 		25F18A9A14DBDC2E008B1A31 /* GRTTrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRTTrip.h; sourceTree = "<group>"; };
 		25F18A9B14DBDC2E008B1A31 /* GRTTrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRTTrip.m; sourceTree = "<group>"; };
-		3CE29D95533A278CA05A7EEE /* libPods-doGRT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-doGRT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		464A30AEC836D8C16401F031 /* Pods-doGRT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-doGRT.release.xcconfig"; path = "Pods/Target Support Files/Pods-doGRT/Pods-doGRT.release.xcconfig"; sourceTree = "<group>"; };
+		81DF0407BD3BF6C3CA79E111 /* Pods_doGRT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_doGRT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFCC2FCC5E05639A952BE9D0 /* Pods-doGRT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-doGRT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-doGRT/Pods-doGRT.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,7 +191,7 @@
 				2515ED3614C5817600FDCD6D /* Foundation.framework in Frameworks */,
 				2515ED3814C5817600FDCD6D /* CoreGraphics.framework in Frameworks */,
 				2515ED3A14C5817600FDCD6D /* CoreData.framework in Frameworks */,
-				A88802FDF1A616714DCA9000 /* libPods-doGRT.a in Frameworks */,
+				280F2F7F310B7EFB28121D66 /* Pods_doGRT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,7 +269,7 @@
 				2515ED3514C5817600FDCD6D /* Foundation.framework */,
 				2515ED3714C5817600FDCD6D /* CoreGraphics.framework */,
 				2515ED3914C5817600FDCD6D /* CoreData.framework */,
-				3CE29D95533A278CA05A7EEE /* libPods-doGRT.a */,
+				81DF0407BD3BF6C3CA79E111 /* Pods_doGRT.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -305,6 +310,7 @@
 				25C7493B15E09173003AB331 /* iPhoneStoryboard.storyboard */,
 				25C7493D15E09190003AB331 /* iPadStoryboard.storyboard */,
 				25C77AD21E87AD2100F06D98 /* Launch Screen.storyboard */,
+				251371BA1E99C387009099F0 /* GRT_GTFS.zip */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -321,6 +327,8 @@
 				259003911611691B00FE051C /* GRTStopDetails.m */,
 				252C3DE0161751FF00C5A933 /* GRTShape.h */,
 				252C3DE1161751FF00C5A933 /* GRTShape.m */,
+				251371BF1E9AC60F009099F0 /* GRTGtfsParser.h */,
+				251371C01E9AC60F009099F0 /* GRTGtfsParser.m */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -507,6 +515,7 @@
 				25C77AD31E87AD2100F06D98 /* Launch Screen.storyboard in Resources */,
 				25C7493C15E09173003AB331 /* iPhoneStoryboard.storyboard in Resources */,
 				25C7493E15E09190003AB331 /* iPadStoryboard.storyboard in Resources */,
+				251371BB1E99C387009099F0 /* GRT_GTFS.zip in Resources */,
 				257B1C961620A96F00176083 /* iTunesArtwork.png in Resources */,
 				2527E8CA1E99BE6300A5FCFF /* 20170408171031877_InitializeGtfsDatabase.sql in Resources */,
 				257B1C971620A96F00176083 /* iTunesArtwork@2x.png in Resources */,
@@ -598,6 +607,7 @@
 				25831FC2162B5A2300EDD65D /* ASIDataDecompressor.m in Sources */,
 				25831FC3162B5A2300EDD65D /* ASIInputStream.m in Sources */,
 				25831FCC162B5AD500EDD65D /* ASIDownloadCache.m in Sources */,
+				251371C11E9AC60F009099F0 /* GRTGtfsParser.m in Sources */,
 				25831FCD162B5AD500EDD65D /* ASIFormDataRequest.m in Sources */,
 				25831FCE162B5AD500EDD65D /* ASINetworkQueue.m in Sources */,
 				2572166F162B8EE000A206D4 /* UIViewController+GRTGtfsUpdater.m in Sources */,
@@ -657,6 +667,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -693,6 +704,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
