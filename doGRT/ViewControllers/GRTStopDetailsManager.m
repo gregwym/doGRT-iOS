@@ -11,6 +11,7 @@
 
 #import "GRTStopDetailsManager.h"
 #import "GRTGtfsSystem.h"
+#import "UltraWeekCalendar.h"
 
 @interface GRTStopDetailsManager ()
 
@@ -21,7 +22,7 @@
 
 @implementation GRTStopDetailsManager
 
-- (void)setDelegate:(id<GRTStopDetailsManagerDelegate>)delegate
+- (void)setDelegate:(UIViewController<GRTStopDetailsManagerDelegate> *)delegate
 {
 	_delegate = delegate;
 	if (delegate != nil) {
@@ -149,13 +150,102 @@
     if (self.menu != nil && self.menu.isOpen) {
         [self closeMenu:sender];
     } else {
-        [self showModeMenu:sender];
+        [self showWeekCalendar:sender];
+//        [self showDatePicker:sender];
+//        [self showModeMenu:sender];
     }
 }
 
 - (IBAction)closeMenu:(id)sender
 {
 	[self.menu close];
+}
+
+- (IBAction)showWeekCalendar:(id)sender
+{
+//    UltraWeekCalendar *calendar = [[UltraWeekCalendar alloc] initWithFrame:CGRectMake(0, 100, 320, 50)];
+//    calendar.delegate = self;
+//    calendar.startDate = [NSDate date];
+//    calendar.endDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitWeekOfYear value:4 toDate:[NSDate date] options:NSCalendarWrapComponents];
+//    [self.delegate.view addSubview:calendar];
+
+    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 100, 320, 200)];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    datePicker.minimumDate = [NSDate date];
+    datePicker.maximumDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitWeekOfYear value:1 toDate:[NSDate date] options:NSCalendarWrapComponents];
+    [self.delegate.view addSubview:datePicker];
+}
+
+- (IBAction)showDatePicker:(id)sender
+{
+    UIAlertController *alertController = nil;
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+    } else {
+        alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    }
+
+    UIView *datePickerView = [UIView new];
+
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    [datePickerView addSubview:datePicker];
+    datePickerView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    UIButton *confirmButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    confirmButton.backgroundColor = [UIColor redColor];
+    [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
+    [confirmButton addTarget:self
+                      action:@selector(didTapConfirmButton:)
+       forControlEvents:UIControlEventTouchUpInside];
+    [datePickerView addSubview:confirmButton];
+    confirmButton.translatesAutoresizingMaskIntoConstraints = NO;
+
+//    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        self.date = datePicker.date;
+//        self.stopDetailsTitleView.detailTextLabel.text = [self constructTitleDetailTextForDate:self.date];
+//        [self updateStopTimes];
+//    }];
+//    [alertController addAction:confirmAction];
+
+    UIAlertAction *todayAction = [UIAlertAction actionWithTitle:@"Show today" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        self.date = [NSDate date];
+        self.stopDetailsTitleView.detailTextLabel.text = @"Today ▾";
+        [self updateStopTimes];
+    }];
+    [alertController addAction:todayAction];
+
+    UIView *alertView = alertController.view;
+    [alertView addSubview:datePickerView];
+    alertView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [NSLayoutConstraint activateConstraints:@[
+                                              [datePickerView.topAnchor constraintEqualToAnchor:alertView.topAnchor],
+                                              [alertView.bottomAnchor constraintEqualToAnchor:datePickerView.bottomAnchor constant:65.0],
+                                              [datePickerView.leadingAnchor constraintEqualToAnchor:alertView.leadingAnchor],
+                                              [datePickerView.trailingAnchor constraintEqualToAnchor:alertView.trailingAnchor],
+
+                                              [datePicker.heightAnchor constraintEqualToConstant:300.0],
+
+                                              [datePicker.leadingAnchor constraintEqualToAnchor:datePickerView.leadingAnchor],
+                                              [datePicker.trailingAnchor constraintEqualToAnchor:datePickerView.trailingAnchor],
+                                              [datePicker.topAnchor constraintEqualToAnchor:datePickerView.topAnchor],
+
+                                              [confirmButton.topAnchor constraintEqualToAnchor:datePicker.bottomAnchor],
+                                              [confirmButton.bottomAnchor constraintEqualToAnchor:datePickerView.bottomAnchor],
+                                              [confirmButton.leadingAnchor constraintEqualToAnchor:datePickerView.leadingAnchor],
+                                              [confirmButton.trailingAnchor constraintEqualToAnchor:datePickerView.trailingAnchor]
+                                              ]];
+
+    [self.delegate presentViewController:alertController animated:YES completion:nil];
+}
+
+- (IBAction)didTapConfirmButton:(id)sender {
+    UIDatePicker *datePicker = (UIDatePicker*)sender;
+    self.date = datePicker.date;
+    self.stopDetailsTitleView.detailTextLabel.text = [self constructTitleDetailTextForDate:self.date];
+    [self updateStopTimes];
 }
 
 - (IBAction)showModeMenu:(id)sender

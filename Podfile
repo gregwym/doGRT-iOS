@@ -8,5 +8,6 @@ target 'doGRT' do
   pod 'REMenu', '~> 1.10'
   pod 'AFNetworking', '~> 3.0'
   pod 'FontAwesomeKit', '~> 2.2.0'
+  pod 'UltraWeekCalendar', '~>0.1.2'
   pod 'NSLogger'
 end

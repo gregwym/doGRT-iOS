@@ -22,7 +22,7 @@
 @property (nonatomic, strong) GRTStopDetails *stopDetails;
 @property (nonatomic, strong) GRTRoute *route;
 @property (nonatomic, strong) NSDate *date;
-@property (nonatomic, weak) id<GRTStopDetailsManagerDelegate> delegate;
+@property (nonatomic, weak) UIViewController<GRTStopDetailsManagerDelegate> *delegate;
 
 - (GRTStopDetailsManager *)initWithStopDetails:(GRTStopDetails *)stopDetails;
 - (GRTStopDetailsManager *)initWithStopDetails:(GRTStopDetails *)stopDetails route:(GRTRoute *)route;

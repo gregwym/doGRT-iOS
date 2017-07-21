@@ -39,7 +39,6 @@ PODS:
   - FontAwesomeKit/Zocial (2.2.1):
     - FontAwesomeKit/Core
   - InformaticToolbar (0.2.1)
-  - JTAppleCalendar (7.0.4)
   - NSLogger (1.8.3):
     - NSLogger/ObjC (= 1.8.3)
   - NSLogger/ObjC (1.8.3)
@@ -47,6 +46,7 @@ PODS:
     - QuickDialog/Core (= 1.1.0)
   - QuickDialog/Core (1.1.0)
   - REMenu (1.10)
+  - UltraWeekCalendar (0.1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
@@ -56,6 +56,7 @@ DEPENDENCIES:
   - NSLogger
   - QuickDialog (~> 1.0)
   - REMenu (~> 1.10)
+  - UltraWeekCalendar (~> 0.1.2)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -65,7 +66,8 @@ SPEC CHECKSUMS:
   NSLogger: c9b80dbeee1d65eb553647a1f6f1f72171b04808
   QuickDialog: 6954450c4c2d003a89fbfee48ec8fa4695436b01
   REMenu: 30dad195930adf6c5eeb8041e3257aa60bf9fa49
+  UltraWeekCalendar: dc7eab51b4d82017fb9070f3213cae82fd994882
 
-PODFILE CHECKSUM: c461558c625a53dce86cb04b5f78c91cc85e72e0
+PODFILE CHECKSUM: '023785c56b797923bf351b6446c9cf5438a9d9b9'
 
 COCOAPODS: 1.2.0
