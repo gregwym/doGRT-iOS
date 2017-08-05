@@ -63,7 +63,8 @@ NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/dogrt/updates/g
 {
 	if (_db == nil) {
 		NSURL *dbURL = [self dbURL];
-		
+
+        NSLog(@"Opening DB with URL %@", dbURL);
 		_db = [FMDatabase databaseWithPath:dbURL.path];
 	}
 	if (![_db goodConnection]) {
@@ -227,6 +228,13 @@ NSString * const kGRTGtfsDataUpdateJsonUrl = @"http://dolast.com/dogrt/updates/g
 
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
 
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        if ([httpResponse statusCode] == 200) {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSError *error;
+            [fileManager removeItemAtURL:localURL error:&error];
+            NSLog(@"Local DB removed from %@, ERROR: %@", localURL, error);
+        }
         return [localURL copy];
 
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {

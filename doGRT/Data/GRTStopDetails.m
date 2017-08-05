@@ -121,7 +121,6 @@
                        @") ",
 					   dayName];
 	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:self.stop.stopId, dateValue, dateValue, nil];
-    NSLog(@"Querying %@ with args %@", query, arguments);
 
 	if (afterMidnight) {
 		query = [query stringByAppendingFormat:@"AND s.departure_time>=? "];
@@ -132,9 +131,11 @@
 		query = [query stringByAppendingString:@"AND t.route_id=? "];
 		[arguments addObject:route.routeId];
 	}
+
 	query = [query stringByAppendingString:@"ORDER BY s.departure_time "];
 	
 	// execute database query
+    NSLog(@"Querying %@ with args %@", query, arguments);
 	FMDatabase *db = [GRTGtfsSystem defaultGtfsSystem].db;
 	FMResultSet *result = [db executeQuery:query withArgumentsInArray:arguments];
 	if (result == nil){
@@ -168,7 +169,8 @@
 	}
 	
 	[result close];
-	
+
+    NSLog(@"DB query returned %ld stop times", (long)[stopTimes count]);
 	return stopTimes;
 }
 
